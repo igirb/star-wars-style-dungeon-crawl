@@ -6,7 +6,8 @@ import com.codecool.dungeoncrawl.data.Drawable;
 
 public abstract class Actor implements Drawable {
     private Cell cell;
-    private int health = 10;
+    protected int health;
+    protected int damage;
 
     public Actor(Cell cell) {
         this.cell = cell;
@@ -23,9 +24,24 @@ public abstract class Actor implements Drawable {
         cell = nextCell;
     }
 
+    public int getAttackPoint() {
+        return damage;
+    }
+
+    public void setAttackPoint(int damage) {
+        this.damage = damage;
+    }
+    private void loseHP(){};
+
     public int getHealth() {
         return health;
     }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void attack(){};
 
     public Cell getCell() {
         return cell;
