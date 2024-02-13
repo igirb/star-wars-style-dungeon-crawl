@@ -1,8 +1,15 @@
 package com.codecool.dungeoncrawl.data.inventory;
 
-public class Weapon extends Equipment{
+import com.codecool.dungeoncrawl.data.Cell;
 
-    public Weapon(String name, int damage) {
-        super(name, damage);
+public class Weapon extends Equipment {
+
+    public Weapon(String name, Cell cell, int damage) {
+        super(name, cell, damage);
+    }
+
+    @Override
+    public String getTileName() {
+        return "weapon";
     }
 }
