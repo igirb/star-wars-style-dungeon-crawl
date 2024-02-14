@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.data.Drawable;
 import com.codecool.dungeoncrawl.data.GameMap;
 
 public abstract class Actor implements Drawable {
+
     protected Cell cell;
     protected int health;
     protected int damage;
@@ -12,6 +13,30 @@ public abstract class Actor implements Drawable {
     public Actor(Cell cell) {
         this.cell = cell;
         this.cell.setActor(this);
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getAttackPoint() {
+        return damage;
+    }
+
+    public void setAttackPoint(int damage) {
+        this.damage = damage;
+    }
+
+    public Cell getCell() {
+        return cell;
+    }
+
+    public int getX() {
+        return cell.getX();
+    }
+
+    public int getY() {
+        return cell.getY();
     }
 
     public void move(int dx, int dy) {
@@ -28,17 +53,6 @@ public abstract class Actor implements Drawable {
         }
     }
 
-    public int getAttackPoint() {
-        return damage;
-    }
-
-    public void setAttackPoint(int damage) {
-        this.damage = damage;
-    }
-    public int getHealth() {
-        return health;
-    }
-
     public void attack(Cell enemyPosition, Actor opponent) {
         opponent.looseHP(this.getAttackPoint());
         if (opponent.getHealth() <= 0) {
@@ -46,13 +60,6 @@ public abstract class Actor implements Drawable {
         } else {
             this.looseHP(opponent.getAttackPoint());
             ((Enemy) opponent).behaviour();
-        }
-    }
-
-    public void setIfPlayerIsKilled() {
-        if (this instanceof Player && this.getHealth() <= 0) {
-            cell.setActor(null);
-            System.out.println("Game Over");
         }
     }
 
@@ -65,16 +72,10 @@ public abstract class Actor implements Drawable {
         }
     }
 
-
-    public Cell getCell() {
-        return cell;
-    }
-
-    public int getX() {
-        return cell.getX();
-    }
-
-    public int getY() {
-        return cell.getY();
+    public void setIfPlayerIsKilled() {
+        if (this instanceof Player && this.getHealth() <= 0) {
+            cell.setActor(null);
+            System.out.println("Game Over");
+        }
     }
 }
