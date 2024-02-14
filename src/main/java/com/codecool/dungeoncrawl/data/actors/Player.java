@@ -20,10 +20,10 @@ public class Player extends Actor {
     private final int maxHealth;
     public Player(Cell cell) {
         super(cell);
-        this.health = 15;
+        this.maxHealth = 15;
         this.damage = 9; //to be calibrated
         killCount = 0;
-        this.maxHealth = health;
+        this.health = maxHealth;
     }
 
     @Override
@@ -31,21 +31,10 @@ public class Player extends Actor {
         super.move(dx, dy);
         Item foundItem = cell.getItem();
         if (foundItem != null) {
-            getItemStat(foundItem);
             pickUpItem(cell.getItem());
-
             cell.setItem(null);
         }
         System.out.println(inventory);
-    }
-
-    private void getItemStat(Item foundItem) {
-        if(foundItem instanceof Weapon){
-            increaseStat("damage", ((Weapon) foundItem).getValue());
-            System.out.println(damage);
-        } else if (foundItem instanceof Potion) {
-            increaseStat("health", ((Potion) foundItem).getValue());
-        }
     }
 
     public String getTileName() {
@@ -57,8 +46,11 @@ public class Player extends Actor {
         health += value;
     }
 
-    public void pickUpItem(Item item) {
+    private void pickUpItem(Item item) {
         inventory.add(item);
+        if (item instanceof Weapon) {
+            increaseStat("damage", ((Weapon) item).getValue());
+        }
     }
 
     public void incrementKillCount() {
@@ -92,24 +84,28 @@ public class Player extends Actor {
         }
     }
 
-    public void incrementEliminationCount() {
-
     private void removeItem(Item item){
         inventory.remove(item);
     };
 
-    public boolean findItem(Item item){
-        return inventory.contains(item);
+    private Item findPotion(){
+        return inventory.stream().filter(item -> item instanceof Potion).findFirst().orElse(null);
     }
 
     private void increaseStat(String stat, int value){
         switch (stat){
             case "damage"-> damage += value;
-            case "health"-> health = value;
+            case "health"-> health = maxHealth;
         }
     }
 
     public int getMaxHealth() {
         return maxHealth;
     }
+
+    public void usePotion(){
+        increaseStat("health", maxHealth);
+        removeItem(findPotion());
+    }
+
 }
