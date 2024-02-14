@@ -2,7 +2,6 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.Drawable;
-import com.codecool.dungeoncrawl.data.GameMap;
 
 public abstract class Actor implements Drawable {
 
@@ -72,6 +71,18 @@ public abstract class Actor implements Drawable {
         }
     }
 
+    public Cell getCell() {
+        return cell;
+    }
+
+    public int getX() {
+        return cell.getX();
+    }
+
+    public int getY() {
+        return cell.getY();
+    }
+  
     public void setIfPlayerIsKilled() {
         if (this instanceof Player && this.getHealth() <= 0) {
             cell.setActor(null);
