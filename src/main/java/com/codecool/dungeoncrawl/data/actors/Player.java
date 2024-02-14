@@ -1,7 +1,9 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.inventory.Item;
+import com.codecool.dungeoncrawl.data.inventory.Key;
 import com.codecool.dungeoncrawl.data.inventory.Potion;
 import com.codecool.dungeoncrawl.data.inventory.Weapon;
 
@@ -18,6 +20,7 @@ public class Player extends Actor {
     private int killCount;
 
     private final int maxHealth;
+
     public Player(Cell cell) {
         super(cell);
         this.health = 15;
@@ -28,19 +31,45 @@ public class Player extends Actor {
 
     @Override
     public void move(int dx, int dy) {
+        Cell nextCell = getCell().getNeighbor(dx, dy);
         super.move(dx, dy);
         Item foundItem = cell.getItem();
         if (foundItem != null) {
-            getItemStat(foundItem);
-            pickUpItem(cell.getItem());
-
+            handleItemPickup(foundItem);
             cell.setItem(null);
         }
+        handleDoor(nextCell);
         System.out.println(inventory);
     }
 
+    private void handleItemPickup(Item foundItem) {
+        getItemStat(foundItem);
+        pickUpItem(foundItem);
+    }
+
+    private void handleDoor(Cell nextCell) {
+        if (nextCell.getType() == CellType.CLOSED_DOOR) {
+            handleClosedDoor(nextCell);
+        }
+    }
+
+    private void handleClosedDoor(Cell nextCell) {
+        if (hasKeyInInventory()) {
+            nextCell.setType(CellType.OPENED_DOOR);
+            removeKeyFromInventory();
+        }
+    }
+
+    private boolean hasKeyInInventory() {
+        return inventory.stream().anyMatch(item -> item instanceof Key);
+    }
+
+    private void removeKeyFromInventory() {
+        inventory.removeIf(item -> item instanceof Key);
+    }
+
     private void getItemStat(Item foundItem) {
-        if(foundItem instanceof Weapon){
+        if (foundItem instanceof Weapon) {
             increaseStat("damage", ((Weapon) foundItem).getValue());
             System.out.println(damage);
         } else if (foundItem instanceof Potion) {
@@ -53,7 +82,6 @@ public class Player extends Actor {
     }
 
     private void restoreHP(int value) {
-        //max hp
         health += value;
     }
 
@@ -85,27 +113,21 @@ public class Player extends Actor {
     private String formatItem(Item item) {
         if (item instanceof Weapon weapon) {
             return weapon.getName() + " (+" + weapon.getValue() + " AD)";
-        } else if(item instanceof Potion potion) {
+        } else if (item instanceof Potion potion) {
             return potion.getName() + " (" + potion.getValue() + "restore HP)";
-        }else {
+        } else {
             return item.getName();
         }
     }
 
-    public void incrementEliminationCount() {
-
-    private void removeItem(Item item){
+    public void removeItem(Item item) {
         inventory.remove(item);
-    };
-
-    public boolean findItem(Item item){
-        return inventory.contains(item);
     }
 
-    private void increaseStat(String stat, int value){
-        switch (stat){
-            case "damage"-> damage += value;
-            case "health"-> health = value;
+    private void increaseStat(String stat, int value) {
+        switch (stat) {
+            case "damage" -> damage += value;
+            case "health" -> health = value;
         }
     }
 
