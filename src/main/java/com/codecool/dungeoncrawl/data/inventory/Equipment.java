@@ -9,4 +9,8 @@ public abstract class Equipment extends Item{
         super(name, cell);
         this.value = value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
