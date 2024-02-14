@@ -14,6 +14,16 @@ public class Player extends Actor {
         this.damage = 9; //to be calibrated
     }
 
+    @Override
+    public void move(int dx, int dy) {
+        super.move(dx, dy);
+        if (cell.getItem() != null) {
+            pickUpItem(cell.getItem());
+        }
+        System.out.println(inventory);
+
+    }
+
     public String getTileName() {
         return "player";
     }
@@ -23,7 +33,9 @@ public class Player extends Actor {
         health += value;
     }
 
-    private void addItem(){};
+    public void pickUpItem(Item item){
+        inventory.add(item);
+    };
 
     private void removeItem(){};
 

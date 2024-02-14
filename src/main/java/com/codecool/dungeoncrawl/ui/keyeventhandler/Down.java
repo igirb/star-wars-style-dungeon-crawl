@@ -6,10 +6,11 @@ import javafx.scene.input.KeyEvent;
 
 public class Down implements KeyHandler {
     public static final KeyCode code = KeyCode.DOWN;
+    public static final KeyCode code2 = KeyCode.W;
 
     @Override
     public void perform(KeyEvent event, GameMap map) {
-        if (code.equals(event.getCode()))
+        if (code.equals(event.getCode()) || code2.equals(event.getCode()))
             map.getPlayer().move(0, 1);
     }
 }
