@@ -17,6 +17,6 @@ public class Weapon extends Equipment {
 
     @Override
     public String toString() {
-        return "Weapon{}" + this.name;
+        return "Weapon: " + this.name;
     }
 }

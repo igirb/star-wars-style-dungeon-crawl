@@ -8,7 +8,7 @@ import java.util.Random;
 public class Stormtrooper extends Enemy {
     public Stormtrooper(Cell cell) {
         super(cell);
-        this.health = 10;
+        this.health = 20;
         this.damage = 2;
     }
 
@@ -25,7 +25,7 @@ public class Stormtrooper extends Enemy {
 
     private boolean canMove(int dx, int dy) {
         Cell nextCell = getCell().getNeighbor(dx, dy);
-        return nextCell.getType() != CellType.WALL;
+        return nextCell.isPassable() && nextCell.getActor() == null;
     }
 
     @Override

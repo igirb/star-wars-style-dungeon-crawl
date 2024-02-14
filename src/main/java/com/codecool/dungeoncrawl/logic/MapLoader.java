@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Stormtrooper;
 import com.codecool.dungeoncrawl.data.inventory.Key;
+import com.codecool.dungeoncrawl.data.inventory.Potion;
 import com.codecool.dungeoncrawl.data.inventory.Weapon;
 
 import java.io.InputStream;
@@ -37,7 +38,7 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             break;
                         case 'd':
-                            cell.setType(CellType.DOOR);
+                            cell.setType(CellType.CLOSED_DOOR);
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
@@ -54,6 +55,10 @@ public class MapLoader {
                         case 'l':
                             cell.setType(CellType.FLOOR);
                             new Weapon("Light saber", cell, 5);
+                            break;
+                        case 'p':
+                            cell.setType(CellType.FLOOR);
+                            new Potion("Focus Tonics", cell, map.getPlayer().getMaxHealth());
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

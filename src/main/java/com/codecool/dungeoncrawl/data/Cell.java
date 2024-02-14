@@ -59,6 +59,7 @@ public class Cell implements Drawable {
     }
 
     public boolean isPassable() {
-        return type != CellType.WALL;
+        return type == CellType.FLOOR ||
+                type == CellType.OPENED_DOOR;
     }
 }
