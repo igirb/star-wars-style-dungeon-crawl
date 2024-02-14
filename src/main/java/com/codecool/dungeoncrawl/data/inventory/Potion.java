@@ -12,4 +12,9 @@ public class Potion extends Equipment {
     public String getTileName() {
         return "potion";
     }
+
+    @Override
+    public String toString() {
+        return "Potion: " + this.name;
+    }
 }
