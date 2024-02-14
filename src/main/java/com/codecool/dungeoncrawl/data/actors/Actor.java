@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.Drawable;
+import com.codecool.dungeoncrawl.data.GameMap;
 
 public abstract class Actor implements Drawable {
     protected Cell cell;
@@ -19,7 +20,7 @@ public abstract class Actor implements Drawable {
             Actor actor = nextCell.getActor();
             if (actor instanceof Enemy) {
                 this.attack(nextCell, actor);
-            } else {
+            } else if (this.health > 0){
                 cell.setActor(null);
                 nextCell.setActor(this);
                 cell = nextCell;
@@ -34,8 +35,6 @@ public abstract class Actor implements Drawable {
     public void setAttackPoint(int damage) {
         this.damage = damage;
     }
-    private void loseHP(){};
-
     public int getHealth() {
         return health;
     }
@@ -50,8 +49,20 @@ public abstract class Actor implements Drawable {
         }
     }
 
+    public void setIfPlayerIsKilled() {
+        if (this instanceof Player && this.getHealth() <= 0) {
+            cell.setActor(null);
+            System.out.println("Game Over");
+        }
+    }
+
     public void looseHP(int damage) {
         this.health -= damage;
+
+        if (this.health <= 0) {
+            this.health = 0;
+            setIfPlayerIsKilled();
+        }
     }
 
 
