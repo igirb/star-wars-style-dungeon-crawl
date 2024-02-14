@@ -26,18 +26,6 @@ public abstract class Actor implements Drawable {
         this.damage = damage;
     }
 
-    public Cell getCell() {
-        return cell;
-    }
-
-    public int getX() {
-        return cell.getX();
-    }
-
-    public int getY() {
-        return cell.getY();
-    }
-
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
         if (nextCell.isPassable()) {

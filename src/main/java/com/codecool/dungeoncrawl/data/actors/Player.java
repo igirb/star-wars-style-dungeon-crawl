@@ -74,6 +74,8 @@ public class Player extends Actor {
         } else if (foundItem instanceof Potion) {
             increaseStat("health", ((Potion) foundItem).getValue());
         }
+    }
+
     public int getKillCount() {
         return killCount;
     }
@@ -101,28 +103,6 @@ public class Player extends Actor {
         return groupedItems.entrySet().stream()
                 .flatMap(entry -> Stream.concat(Stream.of(entry.getKey()), entry.getValue().stream()))
                 .collect(Collectors.toList());
-    }
-
-    private String formatItem(Item item) {
-        if (item instanceof Weapon weapon) {
-            return weapon.getName() + " (+" + weapon.getValue() + " AD)";
-        } else if (item instanceof Potion potion) {
-            return potion.getName() + " (" + potion.getValue() + "restore HP)";
-        } else {
-            return item.getName();
-        }
-    }
-
-    public void removeItem(Item item) {
-        inventory.remove(item);
-      
-    private void getItemStat(Item foundItem) {
-        if (foundItem instanceof Weapon) {
-            increaseStat("damage", ((Weapon) foundItem).getValue());
-            System.out.println(damage);
-        } else if (foundItem instanceof Potion) {
-            increaseStat("health", ((Potion) foundItem).getValue());
-        }
     }
 
     public void incrementKillCount() {
@@ -156,18 +136,5 @@ public class Player extends Actor {
         } else {
             return item.getName();
         }
-    }
-
-    @Override
-    public void move(int dx, int dy) {
-        super.move(dx, dy);
-        Item foundItem = cell.getItem();
-        if (foundItem != null) {
-            getItemStat(foundItem);
-            pickUpItem(cell.getItem());
-
-            cell.setItem(null);
-        }
-        System.out.println(inventory);
     }
 }
