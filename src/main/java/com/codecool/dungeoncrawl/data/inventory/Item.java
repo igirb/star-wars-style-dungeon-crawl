@@ -5,7 +5,7 @@ import com.codecool.dungeoncrawl.data.Drawable;
 
 public abstract class Item implements Drawable {
     private Cell cell;
-    private String name;
+    protected String name;
 
     public Item(String name, Cell cell) {
         this.cell = cell;

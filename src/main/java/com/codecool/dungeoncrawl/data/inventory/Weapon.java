@@ -12,4 +12,9 @@ public class Weapon extends Equipment {
     public String getTileName() {
         return "weapon";
     }
+
+    @Override
+    public String toString() {
+        return "Weapon{}" + this.name;
+    }
 }

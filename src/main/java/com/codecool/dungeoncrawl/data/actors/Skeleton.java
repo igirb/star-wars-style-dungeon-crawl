@@ -9,6 +9,8 @@ public class Skeleton extends Actor {
         this.damage = 2;
     }
 
+    //enemy abstract class es abbol jon a Skeleton
+
     @Override
     public String getTileName() {
         return "skeleton";

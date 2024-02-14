@@ -4,9 +4,7 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.inventory.Item;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Player extends Actor {
     private List<Item> inventory = new ArrayList<>();
@@ -14,6 +12,16 @@ public class Player extends Actor {
         super(cell);
         this.health = 15;
         this.damage = 9; //to be calibrated
+    }
+
+    @Override
+    public void move(int dx, int dy) {
+        super.move(dx, dy);
+        if (cell.getItem() != null) {
+            pickUpItem(cell.getItem());
+        }
+        System.out.println(inventory);
+
     }
 
     public String getTileName() {
@@ -25,7 +33,9 @@ public class Player extends Actor {
         health += value;
     }
 
-    private void addItem(){};
+    public void pickUpItem(Item item){
+        inventory.add(item);
+    };
 
     private void removeItem(){};
 
