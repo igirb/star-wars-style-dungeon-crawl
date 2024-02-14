@@ -8,7 +8,7 @@ import java.util.Random;
 public class Stormtrooper extends Enemy {
     public Stormtrooper(Cell cell) {
         super(cell);
-        this.health = 10;
+        this.health = 20;
         this.damage = 2;
     }
 
