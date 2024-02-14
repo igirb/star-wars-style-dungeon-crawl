@@ -18,15 +18,14 @@ public class Player extends Actor {
 
     private List<Item> inventory = new ArrayList<>();
     private int killCount;
-
     private final int maxHealth;
 
     public Player(Cell cell) {
         super(cell);
-        this.health = 15;
-        this.damage = 9; //to be calibrated
+        maxHealth = 15;
+        damage = 9; //to be calibrated
         killCount = 0;
-        this.maxHealth = health;
+        health = maxHealth;
     }
 
     @Override
@@ -75,6 +74,12 @@ public class Player extends Actor {
         } else if (foundItem instanceof Potion) {
             increaseStat("health", ((Potion) foundItem).getValue());
         }
+    public int getKillCount() {
+        return killCount;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
     public String getTileName() {
@@ -83,18 +88,6 @@ public class Player extends Actor {
 
     private void restoreHP(int value) {
         health += value;
-    }
-
-    public void pickUpItem(Item item) {
-        inventory.add(item);
-    }
-
-    public void incrementKillCount() {
-        killCount++;
-    }
-
-    public int getKillCount() {
-        return killCount;
     }
 
     public List<String> getItems() {
@@ -122,6 +115,30 @@ public class Player extends Actor {
 
     public void removeItem(Item item) {
         inventory.remove(item);
+      
+    private void getItemStat(Item foundItem) {
+        if (foundItem instanceof Weapon) {
+            increaseStat("damage", ((Weapon) foundItem).getValue());
+            System.out.println(damage);
+        } else if (foundItem instanceof Potion) {
+            increaseStat("health", ((Potion) foundItem).getValue());
+        }
+    }
+
+    public void incrementKillCount() {
+        killCount++;
+    }
+
+    public void pickUpItem(Item item) {
+        inventory.add(item);
+    }
+
+    private void removeItem(Item item) {
+        inventory.remove(item);
+    }
+
+    public boolean findItem(Item item) {
+        return inventory.contains(item);
     }
 
     private void increaseStat(String stat, int value) {
@@ -131,7 +148,26 @@ public class Player extends Actor {
         }
     }
 
-    public int getMaxHealth() {
-        return maxHealth;
+    private String formatItem(Item item) {
+        if (item instanceof Weapon weapon) {
+            return weapon.getName() + " (+" + weapon.getValue() + " AD)";
+        } else if (item instanceof Potion potion) {
+            return potion.getName() + " (" + potion.getValue() + "restore HP)";
+        } else {
+            return item.getName();
+        }
+    }
+
+    @Override
+    public void move(int dx, int dy) {
+        super.move(dx, dy);
+        Item foundItem = cell.getItem();
+        if (foundItem != null) {
+            getItemStat(foundItem);
+            pickUpItem(cell.getItem());
+
+            cell.setItem(null);
+        }
+        System.out.println(inventory);
     }
 }
