@@ -8,6 +8,8 @@ public class Weapon extends Equipment {
         super(name, cell, damage);
     }
 
+
+
     @Override
     public String getTileName() {
         return "weapon";

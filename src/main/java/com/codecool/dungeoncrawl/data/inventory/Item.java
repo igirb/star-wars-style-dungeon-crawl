@@ -13,6 +13,10 @@ public abstract class Item implements Drawable {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public Cell getCell() {
         return cell;
     }
