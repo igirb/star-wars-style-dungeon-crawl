@@ -27,7 +27,6 @@ public abstract class Actor implements Drawable {
         }
     }
 
-
     public int getAttackPoint() {
         return damage;
     }
@@ -35,7 +34,7 @@ public abstract class Actor implements Drawable {
     public void setAttackPoint(int damage) {
         this.damage = damage;
     }
-
+    private void loseHP(){};
 
     public int getHealth() {
         return health;
