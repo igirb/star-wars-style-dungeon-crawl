@@ -2,31 +2,45 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
+import com.codecool.dungeoncrawl.data.GameMap;
 
 import java.util.Random;
 
 public class Stormtrooper extends Enemy {
-    public Stormtrooper(Cell cell) {
-        super(cell);
+    public Stormtrooper(Cell cell, GameMap map) {
+        super(cell, map);
         health = 20;
         damage = 2;
     }
 
-    private boolean canMove(int dx, int dy) {
-        Cell nextCell = getCell().getNeighbor(dx, dy);
-        return nextCell.isPassable() && nextCell.getActor() == null;
-    }
-
     @Override
     protected void behaviour() {
-        Random random = new Random();
         int dx, dy;
+        Random random = new Random();
         dx = random.nextInt(5);
         dy = random.nextInt(5);
-        if (canMove(dx, dy)) {
+        if (isMoveWithinMap(dx, dy) && canMove(dx, dy)) {
             move(dx, dy);
         }
     }
+
+//OLD
+//    @Override
+//    public boolean canMove(int dx, int dy) {
+//        Cell nextCell = getCell().getNeighbor(dx, dy);
+//
+//        return nextCell.isPassable() && nextCell.getActor() == null;
+//    }
+
+    @Override
+    public boolean canMove(int dx, int dy) {
+        Cell nextCell = cell.getNeighbor(dx, dy);
+
+        return nextCell.getType() == CellType.FLOOR
+                || nextCell.getType() == CellType.OPENED_DOOR
+                && nextCell.getActor() == null;
+    }
+
 
     @Override
     public String getTileName() {
