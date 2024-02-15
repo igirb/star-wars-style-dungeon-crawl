@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
+
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
-
 import java.util.Random;
 
 public class Stormtrooper extends Enemy {
@@ -17,9 +17,10 @@ public class Stormtrooper extends Enemy {
     protected void behaviour() {
         int dx, dy;
         Random random = new Random();
-        dx = random.nextInt(5);
-        dy = random.nextInt(5);
+        dx = random.nextInt(3 + 3) - 3;
+        dy = random.nextInt(3 + 3) - 3;
         if (isMoveWithinMap(dx, dy) && canMove(dx, dy)) {
+
             move(dx, dy);
         }
     }
