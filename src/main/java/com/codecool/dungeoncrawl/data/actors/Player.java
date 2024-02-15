@@ -2,6 +2,8 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
+import com.codecool.dungeoncrawl.data.GameMap;
+
 import com.codecool.dungeoncrawl.data.inventory.Item;
 import com.codecool.dungeoncrawl.data.inventory.Key;
 import com.codecool.dungeoncrawl.data.inventory.Potion;
@@ -15,31 +17,18 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Player extends Actor {
-
     private List<Item> inventory = new ArrayList<>();
     private int killCount;
     private final int maxHealth;
 
-    public Player(Cell cell) {
-        super(cell);
+    public Player(Cell cell, GameMap map) {
+        super(cell, map);
         maxHealth = 15;
         damage = 9; //to be calibrated
         killCount = 0;
         health = maxHealth;
     }
 
-    @Override
-    public void move(int dx, int dy) {
-        Cell nextCell = getCell().getNeighbor(dx, dy);
-        super.move(dx, dy);
-        Item foundItem = cell.getItem();
-        if (foundItem != null) {
-            pickUpItem(cell.getItem());
-            cell.setItem(null);
-        }
-        handleDoor(nextCell);
-        System.out.println(inventory);
-    }
 
     public String getTileName() {
         return "player";
@@ -55,7 +44,7 @@ public class Player extends Actor {
         if (item instanceof Weapon) {
             increaseStat("damage", ((Weapon) item).getValue());
         }
-    }
+}
 
     private void handleDoor(Cell nextCell) {
         if (nextCell.getType() == CellType.CLOSED_DOOR) {
@@ -78,15 +67,6 @@ public class Player extends Actor {
         inventory.removeIf(item -> item instanceof Key);
     }
 
-    private void getItemStat(Item foundItem) {
-        if (foundItem instanceof Weapon) {
-            increaseStat("damage", ((Weapon) foundItem).getValue());
-            System.out.println(damage);
-        } else if (foundItem instanceof Potion) {
-            increaseStat("health", ((Potion) foundItem).getValue());
-        }
-    }
-
     public int getKillCount() {
         return killCount;
     }
@@ -94,6 +74,7 @@ public class Player extends Actor {
     public int getMaxHealth() {
         return maxHealth;
     }
+
 
     public List<String> getItems() {
         Map<String, List<String>> groupedItems = inventory.stream()
@@ -106,10 +87,6 @@ public class Player extends Actor {
         return groupedItems.entrySet().stream()
                 .flatMap(entry -> Stream.concat(Stream.of(entry.getKey()), entry.getValue().stream()))
                 .collect(Collectors.toList());
-    }
-
-    public void incrementKillCount() {
-        killCount++;
     }
 
     private void removeItem(Item item) {
@@ -137,9 +114,39 @@ public class Player extends Actor {
         }
     }
 
+    @Override
+    public void move(int dx, int dy) {
+        Cell nextCell = cell.getNeighbor(dx, dy);
+        if (isMoveWithinMap(dx, dy) && canMove(dx, dy)) {
+            Actor actor = nextCell.getActor();
+            if (actor instanceof Enemy) {
+                this.attack(nextCell, actor);
+            } else if (this.health > 0) {
+                super.move(dx, dy);
+                Item foundItem = cell.getItem();
+                if (foundItem != null) {
+                    pickUpItem(cell.getItem());
+
+                    cell.setItem(null);
+                }
+                handleDoor(nextCell);
+                System.out.println(inventory);
+            }
+        }
+    }
+
+    @Override
+    public boolean canMove(int dx, int dy) {
+        Cell nextCell = cell.getNeighbor(dx, dy);
+
+        return nextCell.getType() == CellType.FLOOR
+                || nextCell.getType() == CellType.OPENED_DOOR;
+    }
+
     public void usePotion(){
         increaseStat("health", maxHealth);
         removeItem(findPotion());
+
     }
 
 }

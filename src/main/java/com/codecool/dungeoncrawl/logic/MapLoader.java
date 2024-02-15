@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.DarthSidious;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Stormtrooper;
+import com.codecool.dungeoncrawl.data.actors.Yoda;
 import com.codecool.dungeoncrawl.data.inventory.Key;
 import com.codecool.dungeoncrawl.data.inventory.Potion;
 import com.codecool.dungeoncrawl.data.inventory.Weapon;
@@ -43,11 +44,11 @@ public class MapLoader {
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            new Stormtrooper(cell);
+                            new Stormtrooper(cell, map);
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell));
+                            map.setPlayer(new Player(cell, map));
                             break;
                         case 'k':
                             cell.setType(CellType.FLOOR);
@@ -61,9 +62,16 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Potion("Focus Tonics", cell, map.getPlayer().getMaxHealth());
                             break;
+
                         case 'b':
                             cell.setType(CellType.FLOOR);
                             new DarthSidious(cell);
+                            break;
+
+                        case 'y':
+                            cell.setType(CellType.FLOOR);
+                            new Yoda(cell);
+
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
