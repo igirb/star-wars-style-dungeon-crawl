@@ -8,24 +8,24 @@ import java.util.Random;
 public class Stormtrooper extends Enemy {
     public Stormtrooper(Cell cell) {
         super(cell);
-        this.health = 20;
-        this.damage = 2;
+        health = 20;
+        damage = 2;
+    }
+
+    private boolean canMove(int dx, int dy) {
+        Cell nextCell = getCell().getNeighbor(dx, dy);
+        return nextCell.isPassable() && nextCell.getActor() == null;
     }
 
     @Override
     protected void behaviour() {
         Random random = new Random();
         int dx, dy;
-            dx = random.nextInt(5);
-            dy = random.nextInt(5);
+        dx = random.nextInt(5);
+        dy = random.nextInt(5);
         if (canMove(dx, dy)) {
             move(dx, dy);
         }
-    }
-
-    private boolean canMove(int dx, int dy) {
-        Cell nextCell = getCell().getNeighbor(dx, dy);
-        return nextCell.isPassable() && nextCell.getActor() == null;
     }
 
     @Override

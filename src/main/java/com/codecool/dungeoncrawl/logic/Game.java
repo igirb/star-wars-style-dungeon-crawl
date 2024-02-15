@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import java.util.Set;
 
 public class Game extends Application {
+
     private UI ui;
     private GameLogic logic;
     private Set<KeyHandler> keyHandlers;
