@@ -44,7 +44,7 @@ public class Player extends Actor {
         if (item instanceof Weapon) {
             increaseStat("damage", ((Weapon) item).getValue());
         }
-}
+    }
 
     private void handleDoor(Cell nextCell) {
         if (nextCell.getType() == CellType.CLOSED_DOOR) {
@@ -53,10 +53,8 @@ public class Player extends Actor {
     }
 
     private void handleClosedDoor(Cell nextCell) {
-        if (hasKeyInInventory()) {
-            nextCell.setType(CellType.OPENED_DOOR);
-            removeKeyFromInventory();
-        }
+        nextCell.setType(CellType.OPENED_DOOR);
+        removeKeyFromInventory();
     }
 
     private boolean hasKeyInInventory() {
@@ -93,14 +91,14 @@ public class Player extends Actor {
         inventory.remove(item);
     }
 
-    private Item findPotion(){
+    private Item findPotion() {
         return inventory.stream().filter(item -> item instanceof Potion).findFirst().orElse(null);
     }
 
-    private void increaseStat(String stat, int value){
-        switch (stat){
-            case "damage"-> damage += value;
-            case "health"-> health = maxHealth;
+    private void increaseStat(String stat, int value) {
+        switch (stat) {
+            case "damage" -> damage += value;
+            case "health" -> health = maxHealth;
         }
     }
 
@@ -135,15 +133,22 @@ public class Player extends Actor {
         }
     }
 
+
     @Override
     public boolean canMove(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
+        if (hasKeyInInventory()) {
+            return nextCell.getType() == CellType.FLOOR
+                    || nextCell.getType() == CellType.OPENED_DOOR || nextCell.getType() == CellType.CLOSED_DOOR;
+        } else {
+            return nextCell.getType() == CellType.FLOOR
+                    || nextCell.getType() == CellType.OPENED_DOOR;
 
-        return nextCell.getType() == CellType.FLOOR
-                || nextCell.getType() == CellType.OPENED_DOOR;
+        }
+
     }
 
-    public void usePotion(){
+    public void usePotion() {
         increaseStat("health", maxHealth);
         removeItem(findPotion());
 

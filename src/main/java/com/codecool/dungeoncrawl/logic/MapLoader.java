@@ -65,12 +65,12 @@ public class MapLoader {
 
                         case 'b':
                             cell.setType(CellType.FLOOR);
-                            new DarthSidious(cell);
+                            new DarthSidious(cell, map);
                             break;
 
                         case 'y':
                             cell.setType(CellType.FLOOR);
-                            new Yoda(cell);
+                            new Yoda(cell, map);
 
                             break;
                         default:
