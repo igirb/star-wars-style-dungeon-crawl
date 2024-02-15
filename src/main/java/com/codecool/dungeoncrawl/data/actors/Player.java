@@ -2,6 +2,8 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
+import com.codecool.dungeoncrawl.data.GameMap;
+
 import com.codecool.dungeoncrawl.data.inventory.Item;
 import com.codecool.dungeoncrawl.data.inventory.Key;
 import com.codecool.dungeoncrawl.data.inventory.Potion;
@@ -19,26 +21,12 @@ public class Player extends Actor {
     private int killCount;
     private final int maxHealth;
 
-    public Player(Cell cell) {
-        super(cell);
+    public Player(Cell cell, GameMap map) {
+        super(cell, map);
         maxHealth = 15;
         damage = 9; //to be calibrated
         killCount = 0;
         health = maxHealth;
-    }
-
-    @Override
-    public void move(int dx, int dy) {
-        Cell nextCell = getCell().getNeighbor(dx, dy);
-        super.move(dx, dy);
-        Item foundItem = cell.getItem();
-        if (foundItem != null) {
-            pickUpItem(cell.getItem());
-            handleItemPickup(foundItem);
-            cell.setItem(null);
-        }
-        handleDoor(nextCell);
-        System.out.println(inventory);
     }
 
     private void pickUpItem(Item item) {
@@ -133,9 +121,39 @@ public class Player extends Actor {
         }
     }
 
+    @Override
+    public void move(int dx, int dy) {
+        Cell nextCell = cell.getNeighbor(dx, dy);
+        if (isMoveWithinMap(dx, dy) && canMove(dx, dy)) {
+            Actor actor = nextCell.getActor();
+            if (actor instanceof Enemy) {
+                this.attack(nextCell, actor);
+            } else if (this.health > 0) {
+                super.move(dx, dy);
+                Item foundItem = cell.getItem();
+                if (foundItem != null) {
+                    getItemStat(foundItem);
+                    pickUpItem(cell.getItem());
+
+                    cell.setItem(null);
+                }
+                System.out.println(inventory);
+            }
+        }
+    }
+
+    @Override
+    public boolean canMove(int dx, int dy) {
+        Cell nextCell = cell.getNeighbor(dx, dy);
+
+        return nextCell.getType() == CellType.FLOOR
+                || nextCell.getType() == CellType.OPENED_DOOR;
+    }
+
     public void usePotion(){
         increaseStat("health", maxHealth);
         removeItem(findPotion());
+
     }
 
 }
