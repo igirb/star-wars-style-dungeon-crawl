@@ -13,6 +13,7 @@ public class Stormtrooper extends Enemy {
         damage = 2;
     }
 
+
     @Override
     protected void behaviour() {
         int dx, dy;

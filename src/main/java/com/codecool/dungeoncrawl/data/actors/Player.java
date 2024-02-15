@@ -29,17 +29,22 @@ public class Player extends Actor {
         health = maxHealth;
     }
 
+
+    public String getTileName() {
+        return "player";
+    }
+
+    private void restoreHP(int value) {
+        //max hp
+        health += value;
+    }
+
     private void pickUpItem(Item item) {
         inventory.add(item);
         if (item instanceof Weapon) {
             increaseStat("damage", ((Weapon) item).getValue());
         }
-    }
-      
-    private void handleItemPickup(Item foundItem) {
-        getItemStat(foundItem);
-        pickUpItem(foundItem);
-    }
+}
 
     private void handleDoor(Cell nextCell) {
         if (nextCell.getType() == CellType.CLOSED_DOOR) {
@@ -62,15 +67,6 @@ public class Player extends Actor {
         inventory.removeIf(item -> item instanceof Key);
     }
 
-    private void getItemStat(Item foundItem) {
-        if (foundItem instanceof Weapon) {
-            increaseStat("damage", ((Weapon) foundItem).getValue());
-            System.out.println(damage);
-        } else if (foundItem instanceof Potion) {
-            increaseStat("health", ((Potion) foundItem).getValue());
-        }
-    }
-
     public int getKillCount() {
         return killCount;
     }
@@ -79,9 +75,6 @@ public class Player extends Actor {
         return maxHealth;
     }
 
-    public String getTileName() {
-        return "player";
-    }
 
     public List<String> getItems() {
         Map<String, List<String>> groupedItems = inventory.stream()
@@ -132,11 +125,11 @@ public class Player extends Actor {
                 super.move(dx, dy);
                 Item foundItem = cell.getItem();
                 if (foundItem != null) {
-                    getItemStat(foundItem);
                     pickUpItem(cell.getItem());
 
                     cell.setItem(null);
                 }
+                handleDoor(nextCell);
                 System.out.println(inventory);
             }
         }

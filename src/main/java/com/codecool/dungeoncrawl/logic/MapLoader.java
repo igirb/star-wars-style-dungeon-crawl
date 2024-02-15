@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.data.actors.DarthSidious;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Stormtrooper;
 import com.codecool.dungeoncrawl.data.actors.Yoda;
@@ -61,9 +62,16 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Potion("Focus Tonics", cell, map.getPlayer().getMaxHealth());
                             break;
+
+                        case 'b':
+                            cell.setType(CellType.FLOOR);
+                            new DarthSidious(cell);
+                            break;
+
                         case 'y':
                             cell.setType(CellType.FLOOR);
                             new Yoda(cell);
+
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
