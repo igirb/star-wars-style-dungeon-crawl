@@ -21,7 +21,7 @@ public class Player extends Actor {
 
     public Player(Cell cell) {
         super(cell);
-        maxHealth = 15;
+        maxHealth = 1;
         damage = 9; //to be calibrated
         killCount = 0;
         health = maxHealth;
