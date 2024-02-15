@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Player extends Actor {
-
     private List<Item> inventory = new ArrayList<>();
     private int killCount;
     private final int maxHealth;
@@ -42,20 +41,12 @@ public class Player extends Actor {
         System.out.println(inventory);
     }
 
-    public String getTileName() {
-        return "player";
-    }
-
-    private void restoreHP(int value) {
-        //max hp
-        health += value;
-    }
-
     private void pickUpItem(Item item) {
         inventory.add(item);
         if (item instanceof Weapon) {
             increaseStat("damage", ((Weapon) item).getValue());
         }
+    }
       
     private void handleItemPickup(Item foundItem) {
         getItemStat(foundItem);
@@ -104,10 +95,6 @@ public class Player extends Actor {
         return "player";
     }
 
-    private void restoreHP(int value) {
-        health += value;
-    }
-
     public List<String> getItems() {
         Map<String, List<String>> groupedItems = inventory.stream()
                 .sorted(Comparator.comparing(item -> item.getClass().getSimpleName()))
@@ -119,10 +106,6 @@ public class Player extends Actor {
         return groupedItems.entrySet().stream()
                 .flatMap(entry -> Stream.concat(Stream.of(entry.getKey()), entry.getValue().stream()))
                 .collect(Collectors.toList());
-    }
-
-    public void incrementKillCount() {
-        killCount++;
     }
 
     private void removeItem(Item item) {

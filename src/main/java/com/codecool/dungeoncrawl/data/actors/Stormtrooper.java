@@ -1,8 +1,6 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
-import com.codecool.dungeoncrawl.data.CellType;
-
 import java.util.Random;
 
 public class Stormtrooper extends Enemy {
@@ -21,8 +19,8 @@ public class Stormtrooper extends Enemy {
     protected void behaviour() {
         Random random = new Random();
         int dx, dy;
-        dx = random.nextInt(5);
-        dy = random.nextInt(5);
+        dx = random.nextInt(3 + 3) - 3;
+        dy = random.nextInt(3 + 3) - 3;
         if (canMove(dx, dy)) {
             move(dx, dy);
         }

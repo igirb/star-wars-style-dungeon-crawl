@@ -55,7 +55,7 @@ public abstract class Actor implements Drawable {
 
         if (this.health <= 0) {
             this.health = 0;
-            setIfPlayerIsKilled();
+            setIfActorIsKilled();
         }
     }
 
@@ -70,11 +70,10 @@ public abstract class Actor implements Drawable {
     public int getY() {
         return cell.getY();
     }
-  
-    public void setIfPlayerIsKilled() {
-        if (this instanceof Player && this.getHealth() <= 0) {
+
+    public void setIfActorIsKilled() {
+        if (this.getHealth() <= 0) {
             cell.setActor(null);
-            System.out.println("Game Over");
         }
     }
 }
