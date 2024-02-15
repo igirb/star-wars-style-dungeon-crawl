@@ -8,4 +8,3 @@ public abstract class Friend extends Actor{
         super(cell, map);
     }
 }
-git

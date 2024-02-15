@@ -21,9 +21,6 @@ public class Player extends Actor {
     private int killCount;
     private final int maxHealth;
 
-    public Player(Cell cell) {
-        super(cell);
-        maxHealth = 1;
     public Player(Cell cell, GameMap map) {
         super(cell, map);
         maxHealth = 15;

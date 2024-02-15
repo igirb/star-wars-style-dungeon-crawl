@@ -89,7 +89,9 @@ public abstract class Actor implements Drawable {
     }
 
     public void setIfActorIsKilled() {
-        if (this.getHealth() <= 0) {
+        if (this instanceof Player) {
+            System.exit(0);
+        } else if (this.getHealth() <= 0) {
             cell.setActor(null);
         }
     }
