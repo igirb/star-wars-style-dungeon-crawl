@@ -35,6 +35,7 @@ public class Tiles {
         tileMap.put("weapon", new Tile(0, 29));
         tileMap.put("key", new Tile(16, 23));
         tileMap.put("potion", new Tile(26, 23));
+        tileMap.put("darthsidious", new Tile(24, 2));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {
