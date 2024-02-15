@@ -34,6 +34,7 @@ public class Player extends Actor {
         super.move(dx, dy);
         Item foundItem = cell.getItem();
         if (foundItem != null) {
+            pickUpItem(cell.getItem());
             handleItemPickup(foundItem);
             cell.setItem(null);
         }
@@ -41,6 +42,21 @@ public class Player extends Actor {
         System.out.println(inventory);
     }
 
+    public String getTileName() {
+        return "player";
+    }
+
+    private void restoreHP(int value) {
+        //max hp
+        health += value;
+    }
+
+    private void pickUpItem(Item item) {
+        inventory.add(item);
+        if (item instanceof Weapon) {
+            increaseStat("damage", ((Weapon) item).getValue());
+        }
+      
     private void handleItemPickup(Item foundItem) {
         getItemStat(foundItem);
         pickUpItem(foundItem);
@@ -109,22 +125,18 @@ public class Player extends Actor {
         killCount++;
     }
 
-    public void pickUpItem(Item item) {
-        inventory.add(item);
-    }
-
     private void removeItem(Item item) {
         inventory.remove(item);
     }
 
-    public boolean findItem(Item item) {
-        return inventory.contains(item);
+    private Item findPotion(){
+        return inventory.stream().filter(item -> item instanceof Potion).findFirst().orElse(null);
     }
 
-    private void increaseStat(String stat, int value) {
-        switch (stat) {
-            case "damage" -> damage += value;
-            case "health" -> health = value;
+    private void increaseStat(String stat, int value){
+        switch (stat){
+            case "damage"-> damage += value;
+            case "health"-> health = maxHealth;
         }
     }
 
@@ -137,4 +149,10 @@ public class Player extends Actor {
             return item.getName();
         }
     }
+
+    public void usePotion(){
+        increaseStat("health", maxHealth);
+        removeItem(findPotion());
+    }
+
 }
