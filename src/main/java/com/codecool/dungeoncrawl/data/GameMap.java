@@ -19,6 +19,7 @@ public class GameMap {
             }
         }
     }
+
     public Cell getCell(int x, int y) {
         return cells[x][y];
     }
@@ -37,5 +38,39 @@ public class GameMap {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean isValidMove(int currentX, int currentY, int targetX, int targetY) {
+
+        if (currentX == targetX && currentY == targetY) {
+            return true;
+        }
+
+        boolean withinMap = currentX >= 0 && currentX < width && currentY >= 0 && currentY < height;
+        if (withinMap) {
+            boolean isNotRestricted = cells[currentX][currentY].getType() != CellType.WALL
+                    && cells[currentX][currentY].getType() != CellType.CLOSED_DOOR;
+
+            if (isNotRestricted) {
+                // Up
+                if (isValidMove(currentX, currentY - 1, targetX, targetY)) {
+                    return true;
+                }
+                // Down
+                if (isValidMove(currentX, currentY + 1, targetX, targetY)) {
+                    return true;
+                }
+                // Left
+                if (isValidMove(currentX - 1, currentY, targetX, targetY)) {
+                    return true;
+                }
+                // Right
+                if (isValidMove(currentX + 1, currentY, targetX, targetY)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
