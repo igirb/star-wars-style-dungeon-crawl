@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Stormtrooper;
+import com.codecool.dungeoncrawl.data.actors.Yoda;
 import com.codecool.dungeoncrawl.data.inventory.Key;
 import com.codecool.dungeoncrawl.data.inventory.Potion;
 import com.codecool.dungeoncrawl.data.inventory.Weapon;
@@ -59,6 +60,10 @@ public class MapLoader {
                         case 'p':
                             cell.setType(CellType.FLOOR);
                             new Potion("Focus Tonics", cell, map.getPlayer().getMaxHealth());
+                            break;
+                        case 'y':
+                            cell.setType(CellType.FLOOR);
+                            new Yoda(cell);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
