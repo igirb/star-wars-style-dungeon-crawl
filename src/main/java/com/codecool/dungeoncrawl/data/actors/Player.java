@@ -35,7 +35,6 @@ public class Player extends Actor {
         Item foundItem = cell.getItem();
         if (foundItem != null) {
             pickUpItem(cell.getItem());
-            handleItemPickup(foundItem);
             cell.setItem(null);
         }
         handleDoor(nextCell);
@@ -56,10 +55,6 @@ public class Player extends Actor {
         if (item instanceof Weapon) {
             increaseStat("damage", ((Weapon) item).getValue());
         }
-      
-    private void handleItemPickup(Item foundItem) {
-        getItemStat(foundItem);
-        pickUpItem(foundItem);
     }
 
     private void handleDoor(Cell nextCell) {
@@ -98,14 +93,6 @@ public class Player extends Actor {
 
     public int getMaxHealth() {
         return maxHealth;
-    }
-
-    public String getTileName() {
-        return "player";
-    }
-
-    private void restoreHP(int value) {
-        health += value;
     }
 
     public List<String> getItems() {

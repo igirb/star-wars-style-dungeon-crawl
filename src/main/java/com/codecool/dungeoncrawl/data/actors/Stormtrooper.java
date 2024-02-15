@@ -12,10 +12,6 @@ public class Stormtrooper extends Enemy {
         damage = 2;
     }
 
-    private boolean canMove(int dx, int dy) {
-        Cell nextCell = getCell().getNeighbor(dx, dy);
-        return nextCell.isPassable() && nextCell.getActor() == null;
-    }
 
     @Override
     protected void behaviour() {
