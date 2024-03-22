@@ -4,12 +4,16 @@ import com.codecool.dungeoncrawl.data.Cell;
 
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
+
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Stormtrooper extends Enemy {
-    public Stormtrooper(Cell cell, GameMap map) {
-        super(cell, map);
-        health = 20;
+//    private List<item> items = new ArrayList<>(); //in constructor with Réka for single constructor
+    public Stormtrooper(Cell cell, GameMap map) {//hp dmg
+        super(cell, map);//hp dmg
+        health = 20;//should be passed to parent via parameter
         damage = 2;
     }
 

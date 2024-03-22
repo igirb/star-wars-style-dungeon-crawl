@@ -103,7 +103,7 @@ public class Player extends Actor {
     }
 
     private String formatItem(Item item) {
-        if (item instanceof Weapon weapon) {
+        if (item instanceof Weapon weapon) { //check when instaneof is used incorrectly
             return weapon.getName() + " (+" + weapon.getValue() + " AD)";
         } else if (item instanceof Potion potion) {
             return potion.getName() + " (" + potion.getValue() + "restore HP)";
