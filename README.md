@@ -56,3 +56,13 @@ a lot by tabletop RPGs. Roguelikes usually have the following features in common
 | Arrows | Move |
 | Shift + Arrow Up/Right | Jump up or right (be cautious when jumping through doors without a key) |
 | F | Use a potion |
+
+## Technology Used
+
+This project is developed using Java programming language and utilizes JavaFX for the graphical user interface (GUI) components. JavaFX provides a powerful set of tools for creating rich and interactive applications, allowing for smooth and intuitive user experiences. Java, a widely-used programming language known for its portability and reliability, forms the backbone of the project's functionality.
+
+## License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+If you found this project useful and would like to get in touch, feel free to contact me on [LinkedIn](https://www.linkedin.com/in/igirb/). Your feedback and suggestions are always welcome!
