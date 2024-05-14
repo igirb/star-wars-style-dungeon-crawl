@@ -13,7 +13,7 @@ a lot by tabletop RPGs. Roguelikes usually have the following features in common
 ## Features
 
 1. Eye-catching UI:
-   -Enjoy the view of the galaxy.
+   - Enjoy the view of the galaxy.
 
 3. Restricted Movement
    - Prevent the hero from moving into walls and monsters.
@@ -48,7 +48,3 @@ a lot by tabletop RPGs. Roguelikes usually have the following features in common
 6. Run the program using the following Maven command:
     ```bash
     mvn javafx:run
-
-
-
-
