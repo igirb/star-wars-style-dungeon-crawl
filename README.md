@@ -48,3 +48,11 @@ a lot by tabletop RPGs. Roguelikes usually have the following features in common
 6. Run the program using the following Maven command:
     ```bash
     mvn javafx:run
+
+# Keyboard Controls
+
+| Key | Action |
+| ------ | ------ |
+| Arrows | Move |
+| Shift + Arrow Up/Right | Jump up or right (be cautious when jumping through doors without a key) |
+| F | Use a potion |
