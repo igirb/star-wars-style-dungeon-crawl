@@ -36,13 +36,13 @@ a lot by tabletop RPGs. Roguelikes usually have the following features in common
 9. Diverse Monsters
    - Encounter different types of monsters, each with unique behaviors.
   
-## Setting up the Project in IntelliJ IDEA
+## Setting up the Project
 
-1. Open IntelliJ IDEA.
-2. Navigate to `File` > `Open` and select the project directory.
-3. Once the project is loaded, locate and open the `pom.xml` file.
-4. This project is managed with Maven and uses JavaFX. Ensure you have Maven installed.
-5. Build the project using the following Maven command:
+1. Open the IDE or code editor of your choice (e.g., IntelliJ IDEA, Eclipse, VS Code, or any other).
+2. Navigate to `File` > `Open` (or the equivalent option in your IDE) and select the project directory.
+3. Locate and open the `pom.xml` file in the root of your project. This file manages the project dependencies and configurations using Maven.
+4. Make sure you have **Maven** installed on your system. Maven is required to build and manage the project dependencies, especially for JavaFX.
+5. Open a terminal or command prompt in the project directory and run the following Maven command to compile the project:
    ```bash
    mvn javafx:compile
 6. Run the program using the following Maven command:
@@ -58,6 +58,16 @@ a lot by tabletop RPGs. Roguelikes usually have the following features in common
 | F | Use a potion |
 
 ## Technology Used
+
+<a href="https://www.java.com/" target="_blank">
+  <img src="https://img.shields.io/badge/-Java-black?style=for-the-badge&logo=java&logoColor=white&color=007396" alt="Java" />
+</a>
+<a href="https://openjfx.io/" target="_blank">
+  <img src="https://img.shields.io/badge/-JavaFX-black?style=for-the-badge&logo=java&logoColor=white&color=ED8B00" alt="JavaFX" />
+</a>
+<a href="https://maven.apache.org/" target="_blank">
+  <img src="https://img.shields.io/badge/-Maven-black?style=for-the-badge&logo=apache-maven&logoColor=white&color=C71A36" alt="Maven" />
+</a>
 
 This project is developed using Java programming language and utilizes JavaFX for the graphical user interface (GUI) components. JavaFX provides a powerful set of tools for creating rich and interactive applications, allowing for smooth and intuitive user experiences. Java, a widely-used programming language known for its portability and reliability, forms the backbone of the project's functionality.
 
